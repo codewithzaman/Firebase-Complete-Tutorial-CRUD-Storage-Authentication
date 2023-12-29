@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
-import { db } from '../config/firebaseConfig';
+// import { Auth } from './auth';
+import { db,auth } from '../config/firebaseConfig';
 import {getDocs,collection, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 
 
@@ -35,6 +36,7 @@ const FilmsList = () => {
         title: newMovieTitle,
         releaseDate: newReleaseDate,
         receivedAnOscar : isNewMovieOscar,
+        userid: auth?.currentUser?.uid,
       });
       getMoviesList();
      } catch (error) {
@@ -51,7 +53,7 @@ const FilmsList = () => {
     }
   return (
     <div>
-      <h1>List of Movies</h1>
+      <h2> CRUD Operation on Movies List</h2>
       <div>
         <input type="text" 
         placeholder='Add new movie title'

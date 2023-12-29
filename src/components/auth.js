@@ -57,6 +57,7 @@ export const Auth = () => {
   return (
     <div>
       <div className="signup-form-container">
+        <h2>Authentication By Email and Password</h2>
         <h2>Sign Up Form</h2>
         <input
           type="text"

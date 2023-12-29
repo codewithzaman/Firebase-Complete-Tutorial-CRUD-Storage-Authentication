@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { db } from '../config/firebaseConfig';
-import {getDocs,collection, addDoc} from 'firebase/firestore';
+import {getDocs,collection, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 
 
 const FilmsList = () => {
@@ -11,7 +11,8 @@ const FilmsList = () => {
     const [newReleaseDate, setNewReleaseDate] = useState(0);
     const [isNewMovieOscar, setIsNewMovieOscar] = useState(false)
     const moviesListRef = collection(db,'movies');
-
+    // update title state
+    const [updatedTitle, setUpdatedTitle] = useState()
     const getMoviesList =async ()=>{
       //read the data
       // set the movie list 
@@ -40,6 +41,14 @@ const FilmsList = () => {
       console.log(error);
      }
     }
+    const deleteMovie = async (id)=>{
+      const movieDoc = doc(db,'movies',id)
+      await deleteDoc(movieDoc)
+    }
+    const updateMovieTitle = async (id)=>{
+      const movieDoc = doc(db,'movies',id)
+      await updateDoc(movieDoc,{title:updatedTitle})
+    }
   return (
     <div>
       <h1>List of Movies</h1>
@@ -65,7 +74,11 @@ const FilmsList = () => {
             <div>
             <h1 style={{color: movie.receivedAnOscar ? 'green' :'red'}}>{movie.title}</h1>
             <p>Date:{movie.releaseDate}</p>
-
+            <button style={{backgroundColor:'blue'}} onClick={()=>deleteMovie(movie.id)}>Delete Movie</button><br/><br/>
+            <input type="text"
+            onChange ={(e) => setUpdatedTitle(e.target.value)}
+            />
+            <button onClick={()=>updateMovieTitle(movie.id)}>Update Title</button>
           </div>
           )
           

@@ -45,11 +45,13 @@ const FilmsList = () => {
     }
     const deleteMovie = async (id)=>{
       const movieDoc = doc(db,'movies',id)
-      await deleteDoc(movieDoc)
+      await deleteDoc(movieDoc);
+      deleteMovie();
     }
     const updateMovieTitle = async (id)=>{
       const movieDoc = doc(db,'movies',id)
       await updateDoc(movieDoc,{title:updatedTitle})
+      updateMovieTitle();
     }
   return (
     <div>
